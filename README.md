@@ -34,6 +34,20 @@ New sessions pick it up automatically. Verify with a fresh session:
 muse exec --yolo "Call sessions help with help_for=start, reply with the first 3 lines."
 ```
 
+## Status titles
+
+Lifecycle hooks keep exactly one leading status emoji on the session title
+(same convention as Codex thread titles), rewriting `title.json` and
+announcing `session-markers` so the sidebar refreshes:
+
+- SessionStart / UserPromptSubmit → 🔄 working
+- Stop → ✅ done (per turn; flips back to 🔄 on your next prompt)
+- PermissionRequest → ⏳ waiting on approval (never fires under `--yolo`)
+
+The title body is untouched; agents set it via the `sessions` `rename` action
+(which preserves an existing status prefix). ❌ blocked stays manual: the
+agent renames when user input or authority blocks progress.
+
 ## License
 
 MIT
